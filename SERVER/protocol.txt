@@ -1,0 +1,43 @@
+//Protocol defines how we build our code
+Building a protocol is a core objective
+
+Game Demo Protocol
+
+
+Packets from Client
+=====================
+
+JOIN - sent when joining the game, this packet should "register the player" (request) we won't cover the response for this demo
+	O 	L	Datatype	DESC
+	========================
+	0	4	ascii		"JOIN"
+
+INPT - Current State of the client's input from the player.
+
+	O  L  	Datatype    DESC
+	=========================
+	0  4    ascii 		"INPT"
+	4  1    int8 		direction of horizontal input (is -1, 0, 1)
+	
+
+
+Packets From Server
+=======================
+
+REPL - Sent when creating/updating/deleting game objects
+
+	O 	L 	Datatype 	Desc
+	=======================================
+	0 	4 	ascii 		"REPL"
+	4 	1 	uint8 		1/2/3 (create, update, delete respectively)
+
+	5   4 	ascii 		class ID e.g. "PLYR"
+	9  ??  serialize 	???
+
+PAWN - Sent to client to indicate which pawn they control
+
+	O 	L 	Datatype 	Desc
+	===========================================
+	0	4	ascii		PAWN
+	4 	1	uint8		NetworkID
+	
