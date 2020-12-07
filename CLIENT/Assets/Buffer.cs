@@ -77,6 +77,25 @@ public class Buffer
         _bytes = new byte[0];
     }
 
+    public Buffer Slice(int offset, int length = -1)
+    {
+        if (offset < 0) offset = 0;
+        if (length < 0) length = _bytes.Length - offset;
+
+       
+        if (offset + length > _bytes.Length) return Buffer.Alloc(0);
+        if (length <= 0) return Buffer.Alloc(0);
+
+        byte[] newbytes = new byte[length];
+        int j = 0;
+        for(int i = offset; i < offset + length; i++)
+        {
+            newbytes[j++] = _bytes[i];
+            
+        }
+        return Buffer.From(newbytes);
+    }
+
     public void Consume(int numOfBytes)
     {
         int newLength = _bytes.Length - numOfBytes;
@@ -274,11 +293,11 @@ public class Buffer
     #endregion
 
     #region Read Floats
-    public float ReadSingleBE(int offset = 0)
+    public float ReadSingleLE(int offset = 0)
     {
         return BitConverter.ToSingle(_bytes, offset);
     }
-    public float ReadSingleLE(int offset = 0)
+    public float ReadSingleBE(int offset = 0)
     {
         // grab the 4 bytes, but flip their order:
         byte[] temp = new byte[]
@@ -291,11 +310,11 @@ public class Buffer
 
         return BitConverter.ToSingle(temp, 0);
     }
-    public double ReadDoubleBE(int offset = 0)
+    public double ReadDoubleLE(int offset = 0)
     {
         return BitConverter.ToDouble(_bytes, offset);
     }
-    public double ReadDoubleLE(int offset = 0)
+    public double ReadDoubleBE(int offset = 0)
     {
         // grab the 4 bytes, but flip their order:
         byte[] temp = new byte[]
@@ -316,13 +335,13 @@ public class Buffer
 
     #region Write Floats
     
-    public void WriteSingleBE(float val, int offset = 0)
+    public void WriteSingleLE(float val, int offset = 0)
     {
         byte[] parts = BitConverter.GetBytes(val);
 
         WriteBytes(parts, offset);
     }
-    public void WriteSingleLE(float val, int offset = 0)
+    public void WriteSingleBE(float val, int offset = 0)
     {
         byte[] parts = BitConverter.GetBytes(val);
 
@@ -331,13 +350,13 @@ public class Buffer
         WriteByte(parts[1], offset + 2);
         WriteByte(parts[0], offset + 3);
     }
-    public void WriteDoubleBE(double val, int offset = 0)
+    public void WriteDoubleLE(double val, int offset = 0)
     {
         byte[] parts = BitConverter.GetBytes(val);
 
         WriteBytes(parts, offset);
     }
-    public void WriteDoubleLE(double val, int offset = 0)
+    public void WriteDoubleBE(double val, int offset = 0)
     {
         byte[] parts = BitConverter.GetBytes(val);
 
