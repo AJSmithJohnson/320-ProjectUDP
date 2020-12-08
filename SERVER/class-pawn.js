@@ -1,5 +1,5 @@
 const NetworkObject = require("./class-networkobject.js").NetworkObject;
-
+const Bullet = require("./class-bullet.js").Bullet;
 
 
 exports.Pawn = class Pawn extends NetworkObject{
@@ -47,30 +47,25 @@ exports.Pawn = class Pawn extends NetworkObject{
 
 	}
 	update(game){
-		//12/1/2020
-		//We marked this off because we are trying to do physics
-		//this.position.x = Math.sin(game.time);
-		//console.log(this.position.x);
-		//console.log(this.aabb.bWidth);
-		//console.log(this.aabb.bHeight);
+		
 		let moveX = this.input.axisH|0;// -1,0, or 1//bitwise or means if this is a number use it otherwise use 0
 
 		this.velocity.x = this.accelerate(this.velocity.x, moveX, game.dt);
 		
-
-
-		//this is euler but verlet physics are more reliable if
-		//developing a more traditional game should use verlet
+		//Firing bullets
+		if(this.input.firing == 1){
+			console.log("WE want to fire a bullet");
+			//we spawn a game object, we pass
+			game.spawnObject(this.bullet = new Bullet(this.position.x, (this.position.y + 1) ) );//spawn a new bullet if we are firing
+		}
+		
 		this.position.x += this.velocity.x * game.dt;
 		this.aabb.updateBounds(this.position.x, this.position.y);
-		//this.aabb.bounds.xPos = this.position.x;
-		//this.aabb.bounds.yPos = this.position.y;
-		//console.log("AABB bounds X is" + this.aabb.bounds.xPos);
-		//console.log("AABB bounds Y is" + this.aabb.bounds.yPos);
+		
 	}
 	checkCollision(otherGameObject){
 		if(this.aabb.compareBounds(this.aabb.bounds, otherGameObject.aabb.bounds)){
-			console.log("WE'VE GOT A HIT");
+			//console.log("WE'VE GOT A HIT");
 			return true;
 		}
 		return false;

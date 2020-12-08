@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GetClientInput : MonoBehaviour
 {
+
+    //SHOULD FACTOR IN INPUT HERE SO THAT IF THE PLAYER IS PRESSING SOMETHING THEN WE SEND THE PACKET
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,11 @@ public class GetClientInput : MonoBehaviour
         if (b != null)
         {
             ClientUDP.singleton.SendPacket(b);//alot of issues with the way we are doing this // doing this 60 times a second is not a great way to do this
+        }
+        Buffer s = PacketBuilder.ShootProjectile();
+        if(s!= null)
+        {
+            ClientUDP.singleton.SendPacket(s);
         }
     }
 }

@@ -8,6 +8,7 @@ exports.Client = class Client{
 		this.input = {
 			axisH:0,//horizontalInput
 			axisV:0,//verticalInput
+			firing: 0,//is the player firing a projectile
 		};//end of this.input
 
 		this.pawn = null;//we are storing clients input in client class
@@ -53,9 +54,14 @@ exports.Client = class Client{
 				//if client exists send input to pawn
 				if(this.pawn) this.pawn.input = this.input;
 			break;
+			case "SHOT":
+				if(packet.length < 5) return;
+				this.input.firing = packet.readInt8(4);
+				console.log(this.input.firing);
+				if(this.pawn) this.pawn.input.firing = this.input.firing;
 
 			//TODO: Handle all the many wonderful packets
-
+			break;
 			default:
 				console.log("OH NO, packet type not recognized");
 			break;
