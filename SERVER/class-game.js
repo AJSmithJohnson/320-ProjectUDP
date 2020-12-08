@@ -1,5 +1,5 @@
 
-
+const Obstacle = require("./class-obstacle.js").Obstacle;//This can be deleted later just using this for collision detection
 
 exports.Game = class Game{
 
@@ -13,8 +13,8 @@ exports.Game = class Game{
 		this.timeUntilNextStatePacket = 0;
 		this.objs = [];//store Network Objects
 
+		this.check = false;
 		
-
 		this.server = server;
 		this.update();
 
@@ -34,13 +34,30 @@ exports.Game = class Game{
 
 		for(var i in this.objs){
 			this.objs[i].update(this);//this is a reference to our game\
+			//HERE IS WHERE WE WOULD DO COLLISION DETECTION
+			for(var j in this.objs){
+				if(this.objs[j] != this.objs[i]){
+					if(this.objs[i].checkCollision(this.objs[j])){
+						console.log("REMOVE OBJECT");
+					}
+				}//End of if to check for same object
+			}//End of nested loop
 		}//End of for loop
 
 		//console.log(this.ballPos.x + "This is the ball position");
 		if(player){//if we have at least one player
 			//console.log(player.input.axisH);
 			
+			if(this.check == false){
+			this.spawnObject(this.obstacle = new Obstacle());
+			this.check = true;
+			}
+
 		}
+
+
+
+		// update all the objects in the game and then
 
 		if(this.timeUntilNextStatePacket > 0){//this is used to throttle packets sent so we don't overload the client
 			//count down

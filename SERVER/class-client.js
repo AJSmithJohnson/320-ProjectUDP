@@ -1,7 +1,7 @@
 const Pawn = require("./class-pawn.js").Pawn;
 const Game = require("./class-game.js").Game;
 exports.Client = class Client{
-	static TIMEOUT = 8;
+	static TIMEOUT = 1;
 	constructor(rinfo){
 		this.rinfo = rinfo;//rinfo contains address and port information
 
@@ -21,14 +21,16 @@ exports.Client = class Client{
 		this.pawn = new Pawn(); //set up pawn variable and reference
 		game.spawnObject( this.pawn );//Add pawn to game world
 
-		\
+		
 	}
 
 	update(game){
 		if(game.time > this.timeOfLastPacket + Client.TIMEOUT){
 			//setting up a timout function
 			//Remove pawn( and send REPL delete to all)
-			game.server.disconnectClient(this);
+
+			//COMMENTED THIS OUT FOR NOW IN FINAL PROJECT SHOULD UNCOMMENT
+			//game.server.disconnectClient(this);
 			//Remove client
 
 			//Adjust protocol to send a "KICK" packet

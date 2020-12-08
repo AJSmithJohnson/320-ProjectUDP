@@ -1,4 +1,4 @@
-
+const AABB = require("./class-AABB.js").AABB;
 
 exports.NetworkObject = class NetworkObject{
 	
@@ -15,7 +15,7 @@ exports.NetworkObject = class NetworkObject{
 		this.position = {x:0, y:0, z:0};
 		this.rotation = {x:0, y:0, z:0};
 		this.scale    = {x:1, y:1, z:1};
-
+		this.aabb = new AABB(this.position.x,this.position.z, 0, 0);
 	}
 	update(){
 
