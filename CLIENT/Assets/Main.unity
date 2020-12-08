@@ -251,6 +251,8 @@ MonoBehaviour:
   prefabs:
   - classID: PAWN
     prefab: {fileID: 9068807317524497487, guid: 847e8f22e926b4b4bbd32c976a8a7428, type: 3}
+  - classID: OBCL
+    prefab: {fileID: 1483914949432932704, guid: 6904b803836ec6444af6a416cd642839, type: 3}
 --- !u!114 &1286434645
 MonoBehaviour:
   m_ObjectHideFlags: 0
