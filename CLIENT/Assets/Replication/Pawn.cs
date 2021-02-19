@@ -10,7 +10,7 @@ public class Pawn : NetworkObject
     Vector3 velocity = new Vector3();
     void FixedUpdate()
     {
-        if (canPlayerControl)
+       /* if (canPlayerControl)
         {
 
              int moveX = (int)Input.GetAxisRaw("Horizontal");
@@ -19,7 +19,7 @@ public class Pawn : NetworkObject
            
             transform.position += new Vector3(velocity.x, 0, 0) * Time.fixedDeltaTime;
             
-        }
+        }*/
     }
 
     float Accelerate(float vel, float acc)

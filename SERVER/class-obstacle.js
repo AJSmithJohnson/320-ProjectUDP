@@ -21,7 +21,7 @@ exports.Obstacle = class Obstacle extends NetworkObject{
 			//console.log("OTHER OBJECT" + otherGameObject.aabb.bounds);
 		if(this.aabb.compareBounds(this.aabb.bounds, otherGameObject.aabb.bounds)){
 
-			console.log("WE'VE GOT A HIT");
+			//console.log("WE'VE GOT A HIT");
 			return true;
 		}
 		return false;

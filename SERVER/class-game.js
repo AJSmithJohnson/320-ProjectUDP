@@ -16,6 +16,7 @@ exports.Game = class Game{
 		this.check = false;
 		
 		this.server = server;
+		this.SetUpGameBoard();
 		this.update();
 
 		//this.spawnObject(new Pawn() );//should be in server when player joins
@@ -37,23 +38,15 @@ exports.Game = class Game{
 			//HERE IS WHERE WE WOULD DO COLLISION DETECTION
 			for(var j in this.objs){
 				if(this.objs[j] != this.objs[i]){
+
 					if(this.objs[i].checkCollision(this.objs[j])){
-						console.log("REMOVE OBJECT");
+						//console.log("REMOVE OBJECT");
 					}
 				}//End of if to check for same object
 			}//End of nested loop
 		}//End of for loop
 
-		//console.log(this.ballPos.x + "This is the ball position");
-		if(player){//if we have at least one player
-			//console.log(player.input.axisH);
-			
-			if(this.check == false){
-			this.spawnObject(this.obstacle = new Obstacle());
-			this.check = true;
-			}
-
-		}
+		
 
 
 
@@ -127,6 +120,19 @@ exports.Game = class Game{
 		packet.writeUInt8(netID, 5);
 
 		this.server.sendPacketToAll(packet);
+	}
+
+	SetUpGameBoard(){
+		for(var i = 0; i < 20; i++){
+			for(var u = 0; u < 30; u++){
+				if(Math.random() > .75){
+					this.obstacle = new Obstacle();
+					this.obstacle.position.x = i;
+					this.obstacle.position.z = u;
+					this.spawnObject(this.obstacle);
+				}//End of Math.random
+			}
+		}//End of nested forloop
 	}
 
 }//End of game class

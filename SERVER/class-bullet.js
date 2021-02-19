@@ -6,7 +6,7 @@ exports.Bullet = class Bullet extends NetworkObject{
 		this.classID = "BLLT";
 		this.position.x = spawnX;
 		this.position.y = spawnY;
-		this.speed = 2;
+		this.speed = 5;
 
 		//properties for aabb
 		this.width  =1;
@@ -19,7 +19,7 @@ exports.Bullet = class Bullet extends NetworkObject{
 	}	
 	update(game){
 		//bullet logic here
-		this.position.y += this.speed * game.dt;
+		this.position.z += this.speed * game.dt;
 	}
 
 	checkCollision(otherGameObject){

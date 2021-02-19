@@ -27,13 +27,18 @@ public static class PacketBuilder
         return b;
     }
 
+
+    //TODO: Refactor we are checking for mousebutton down in GetClientInput
+    //so just send 1
     public static Buffer ShootProjectile()
     {
-        int m = IsMouseButtonDown();
-        Buffer b = Buffer.Alloc(5);
-        b.WriteString("SHOT");
-        b.WriteInt8((sbyte)m, 4);
-        return b;
+                
+            int m = IsMouseButtonDown();
+            Buffer b = Buffer.Alloc(5);
+            b.WriteString("SHOT");
+            b.WriteInt8((sbyte)m, 4);
+            return b;
+        
     }
 
 

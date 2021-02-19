@@ -11,7 +11,7 @@ exports.Pawn = class Pawn extends NetworkObject{
 		this.width = 1;
 		this.height = 1;
 		//implementing AABB
-		
+		this.speed = 25;
 		this.aabb.x = this.position.x;
 		this.aabb.y = this.position.y;
 		this.aabb.width = this.width;
@@ -25,19 +25,19 @@ exports.Pawn = class Pawn extends NetworkObject{
 	}
 	accelerate(vel, accelerate, dt){
 		if(accelerate != 0){
-		vel += accelerate * dt;
+		vel += accelerate * dt * this.speed;
 		} else{
 			//not pressing left or right
 			//slow down object
 			if(vel > 0){
 				accelerate = -1;
-				vel += accelerate * dt;
+				vel += accelerate * dt * this.speed;
 				if(vel < 0) vel = 0;
 			}
 
 			if(vel < 0){
 				accelerate = 1;
-				vel += accelerate * dt;
+				vel += accelerate * dt * this.speed;
 				if(vel >0) vel= 0;
 			}
 		}
