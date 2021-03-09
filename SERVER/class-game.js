@@ -36,14 +36,14 @@ exports.Game = class Game{
 		for(var i in this.objs){
 			this.objs[i].update(this);//this is a reference to our game\
 			//HERE IS WHERE WE WOULD DO COLLISION DETECTION
-			for(var j in this.objs){
+			/*for(var j in this.objs){
 				if(this.objs[j] != this.objs[i]){
 
 					if(this.objs[i].checkCollision(this.objs[j])){
 						//console.log("REMOVE OBJECT");
 					}
 				}//End of if to check for same object
-			}//End of nested loop
+			}//End of nested loop*/
 		}//End of for loop
 
 		
@@ -123,9 +123,9 @@ exports.Game = class Game{
 	}
 
 	SetUpGameBoard(){
-		for(var i = 0; i < 20; i++){
-			for(var u = 0; u < 30; u++){
-				if(Math.random() > .75){
+		for(var i = 0; i < 15; i++){
+			for(var u = 0; u < 15; u++){
+				if(Math.random() > .85){
 					this.obstacle = new Obstacle();
 					this.obstacle.position.x = i;
 					this.obstacle.position.z = u;
@@ -134,5 +134,6 @@ exports.Game = class Game{
 			}
 		}//End of nested forloop
 	}
+	
 
 }//End of game class

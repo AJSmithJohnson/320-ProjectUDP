@@ -48,17 +48,18 @@ exports.Client = class Client{
 
 		switch(packetID){
 			case "INPT":
-				if(packet.length < 5) return;
+				if(packet.length < 6) return;
 				this.input.axisH = packet.readInt8(4);
-
+				this.input.firing = packet.readInt8(5);
+				console.log(this.input.firing);
 				//if client exists send input to pawn
 				if(this.pawn) this.pawn.input = this.input;
 			break;
-			case "SHOT":
+			/*case "SHOT":
 				if(packet.length < 5) return;
 				this.input.firing = packet.readInt8(4);
 				console.log(this.input.firing);
-				if(this.pawn) this.pawn.input.firing = this.input.firing;
+				if(this.pawn) this.pawn.input.firing = this.input.firing;*/
 
 			//TODO: Handle all the many wonderful packets
 			break;

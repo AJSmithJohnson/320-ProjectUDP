@@ -1,12 +1,12 @@
 const NetworkObject = require("./class-networkobject.js").NetworkObject;
 
 exports.Bullet = class Bullet extends NetworkObject{
-	constructor(spawnX, spawnY){
+	constructor(){
 		super();
 		this.classID = "BLLT";
-		this.position.x = spawnX;
-		this.position.y = spawnY;
-		this.speed = 5;
+		//this.position.x = spawnX;
+		//this.position.y = spawnY;
+		this.speed = 20;
 
 		//properties for aabb
 		this.width  =1;
@@ -20,6 +20,8 @@ exports.Bullet = class Bullet extends NetworkObject{
 	update(game){
 		//bullet logic here
 		this.position.z += this.speed * game.dt;
+		if(this.position.z > 50) game.removeObject(this);
+		console.log(this + "THIS BULLET IS AT POSITION " + this.position.z);
 	}
 
 	checkCollision(otherGameObject){

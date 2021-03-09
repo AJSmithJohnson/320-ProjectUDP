@@ -7,11 +7,12 @@ exports.Pawn = class Pawn extends NetworkObject{
 		super();//calls the superclasses constructor//which in this case is the one on the class-networkObject
 		this.classID = "PAWN";
 
+		this.timer = 2;
 		//properties for aabb
 		this.width = 1;
 		this.height = 1;
 		//implementing AABB
-		this.speed = 25;
+		this.speed = 5;
 		this.aabb.x = this.position.x;
 		this.aabb.y = this.position.y;
 		this.aabb.width = this.width;
@@ -54,13 +55,21 @@ exports.Pawn = class Pawn extends NetworkObject{
 		
 		//Firing bullets
 		if(this.input.firing == 1){
-			console.log("WE want to fire a bullet");
-			//we spawn a game object, we pass
-			game.spawnObject(this.bullet = new Bullet(this.position.x, (this.position.y + 1) ) );//spawn a new bullet if we are firing
+			
+			if(this.timer <= 0){
+				this.bullet = new Bullet();
+				this.bullet.position.x = this.position.x;
+				this.bullet.position.z = this.position.z + 1;
+				game.spawnObject(this.bullet);//spawn a new bullet if we are firing	
+				this.timer = 5;
+			}else{
+				this.timer -=1;
+			}
+			
 		}
 		
 		this.position.x += this.velocity.x * game.dt;
-		this.aabb.updateBounds(this.position.x, this.position.y);
+		//this.aabb.updateBounds(this.position.x, this.position.y);
 		
 	}
 	checkCollision(otherGameObject){

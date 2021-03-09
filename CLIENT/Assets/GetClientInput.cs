@@ -24,11 +24,11 @@ public class GetClientInput : MonoBehaviour
 
         //If client presses mouse button we try to shoot projectile
         
-        Buffer s = PacketBuilder.ShootProjectile();
+       /* Buffer s = PacketBuilder.ShootProjectile();
         if (s != null)
         {
             ClientUDP.singleton.SendPacket(s);
-         }
+         }*/
         
 
         
