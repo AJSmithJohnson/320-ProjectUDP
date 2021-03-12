@@ -13,14 +13,16 @@ exports.Bullet = class Bullet extends NetworkObject{
 		this.height =1;
 		//setting up aabb
 		this.aabb.x = this.position.x;
-		this.aabb.y = this.position.y;
+		this.aabb.z = this.position.z;
 		this.aabb.width = this.width;
 		this.aabb.height = this.height;
+		this.moving = true;
 	}	
 	update(game){
 		//bullet logic here
 		this.position.z += this.speed * game.dt;
 		if(this.position.z > 50) game.removeObject(this);
+		this.aabb.updateBounds(this.position.x, this.position.z);
 		console.log(this + "THIS BULLET IS AT POSITION " + this.position.z);
 	}
 

@@ -8,9 +8,10 @@ exports.Obstacle = class Obstacle extends NetworkObject{
 		this.width = 1;
 		this.height = 1;
 		this.aabb.x = this.position.x;
-		this.aabb.y = this.position.y;
+		this.aabb.z = this.position.z;
 		this.aabb.width = this.width;
 		this.aabb.height = this.height;
+		this.aabb.updateBounds(this.aabb.x, this.aabb.z);
 	}
 	update(game){
 		
@@ -19,6 +20,7 @@ exports.Obstacle = class Obstacle extends NetworkObject{
 		//console.log("OBJECT A AABB " + this.aabb.bounds);
 			//console.log("          ");
 			//console.log("OTHER OBJECT" + otherGameObject.aabb.bounds);
+		this.aabb.up
 		if(this.aabb.compareBounds(this.aabb.bounds, otherGameObject.aabb.bounds)){
 
 			//console.log("WE'VE GOT A HIT");

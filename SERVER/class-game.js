@@ -34,8 +34,25 @@ exports.Game = class Game{
 		const player = this.server.getPlayer(0);//return nth client
 
 		for(var i in this.objs){
+			if(this.objs[i] == null) {
+				this.objs.splice(i, 1);
+				break;
+			}
 			this.objs[i].update(this);//this is a reference to our game\
+			if(this.objs[i] == null) break;
 			//HERE IS WHERE WE WOULD DO COLLISION DETECTION
+			if(this.objs[i].moving == true){
+				for(var j in this.objs){
+					if(this.objs[i] != this.objs[j]){
+						if(this.objs[i] != null && this.objs[i].checkCollision(this.objs[j])){
+							if(this.objs[i].classID == "BLLT"){
+								this.removeObject(this.objs[j]);
+								break;
+							}
+						}
+					}
+				}
+			}
 			/*for(var j in this.objs){
 				if(this.objs[j] != this.objs[i]){
 

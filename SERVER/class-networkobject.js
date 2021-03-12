@@ -15,6 +15,7 @@ exports.NetworkObject = class NetworkObject{
 		this.position = {x:0, y:0, z:0};
 		this.rotation = {x:0, y:0, z:0};
 		this.scale    = {x:1, y:1, z:1};
+		this.moving = false;
 		this.aabb = new AABB(this.position.x,this.position.z, 0, 0);
 	}
 	update(){

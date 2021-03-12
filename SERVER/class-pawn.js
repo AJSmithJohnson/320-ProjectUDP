@@ -14,10 +14,10 @@ exports.Pawn = class Pawn extends NetworkObject{
 		//implementing AABB
 		this.speed = 5;
 		this.aabb.x = this.position.x;
-		this.aabb.y = this.position.y;
+		this.aabb.z = this.position.z;
 		this.aabb.width = this.width;
 		this.aabb.height = this.height;
-
+		this.moving = true;
 
 		//implementing physics
 		this.velocity = {x:0, y:0, z:0};
@@ -69,7 +69,9 @@ exports.Pawn = class Pawn extends NetworkObject{
 		}
 		
 		this.position.x += this.velocity.x * game.dt;
-		//this.aabb.updateBounds(this.position.x, this.position.y);
+		this.aabb.x = this.position.x;
+		this.aabb.z = this.position.z;
+		this.aabb.updateBounds(this.aabb.x, this.aabb.z);
 		
 	}
 	checkCollision(otherGameObject){
