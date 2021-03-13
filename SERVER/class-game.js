@@ -45,7 +45,9 @@ exports.Game = class Game{
 				for(var j in this.objs){
 					if(this.objs[i] != this.objs[j]){
 						if(this.objs[i] != null && this.objs[i].checkCollision(this.objs[j])){
+							console.log("HERE");
 							if(this.objs[i].classID == "BLLT"){
+								console.log("AND NOW HERE");
 								this.removeObject(this.objs[j]);
 								break;
 							}
@@ -53,14 +55,7 @@ exports.Game = class Game{
 					}
 				}
 			}
-			/*for(var j in this.objs){
-				if(this.objs[j] != this.objs[i]){
-
-					if(this.objs[i].checkCollision(this.objs[j])){
-						//console.log("REMOVE OBJECT");
-					}
-				}//End of if to check for same object
-			}//End of nested loop*/
+			
 		}//End of for loop
 
 		

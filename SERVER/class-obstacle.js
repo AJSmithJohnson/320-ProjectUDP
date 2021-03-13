@@ -20,7 +20,7 @@ exports.Obstacle = class Obstacle extends NetworkObject{
 		//console.log("OBJECT A AABB " + this.aabb.bounds);
 			//console.log("          ");
 			//console.log("OTHER OBJECT" + otherGameObject.aabb.bounds);
-		this.aabb.up
+		
 		if(this.aabb.compareBounds(this.aabb.bounds, otherGameObject.aabb.bounds)){
 
 			//console.log("WE'VE GOT A HIT");

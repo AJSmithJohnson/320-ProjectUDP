@@ -23,7 +23,7 @@ exports.Bullet = class Bullet extends NetworkObject{
 		this.position.z += this.speed * game.dt;
 		if(this.position.z > 50) game.removeObject(this);
 		this.aabb.updateBounds(this.position.x, this.position.z);
-		console.log(this + "THIS BULLET IS AT POSITION " + this.position.z);
+		//console.log(this + "THIS BULLET IS AT POSITION " + this.position.z);
 	}
 
 	checkCollision(otherGameObject){
