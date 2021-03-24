@@ -36,7 +36,8 @@ exports.Bullet = class Bullet extends NetworkObject{
 		   this.position.x + this.width > otherGameObject.position.x &&
 		   this.position.z < otherGameObject.position.z + otherGameObject.height &&
 		   this.position.z +this.height > otherGameObject.position.z  ){
-			return true;
+		   	if(otherGameObject.classID == "OBCL" || otherGameObject.classID == "ENMY"){otherGameObject.shouldDelete = true;}
+			
 		}
 
 		return false;

@@ -18,7 +18,8 @@ exports.Pawn = class Pawn extends NetworkObject{
 		this.aabb.width = this.width;
 		this.aabb.height = this.height;
 		this.moving = true;
-
+		this.shouldDelete = false;
+		this.health = 10;
 		//implementing physics
 		this.velocity = {x:0, y:0, z:0};
 		
@@ -75,11 +76,17 @@ exports.Pawn = class Pawn extends NetworkObject{
 		
 	}
 	checkCollision(otherGameObject){
-		if(this.aabb.compareBounds(this.aabb.bounds, otherGameObject.aabb.bounds)){
-			//console.log("WE'VE GOT A HIT");
-			return true;
-		}
+		//Nothing to put here yet
 		return false;
+	}
+
+	damage(damage){
+		this.health -= damage;
+
+		if(this.health <= 0){
+			console.log("Game over");
+			//TODO: Bring up scoreboard and shit
+		}
 	}
 	serialize(){
 		let b = super.serialize();

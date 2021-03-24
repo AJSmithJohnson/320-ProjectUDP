@@ -1,6 +1,6 @@
 
 const Obstacle = require("./class-obstacle.js").Obstacle;//This can be deleted later just using this for collision detection
-
+const Enemy = require("./class-Enemy.js").Enemy;
 exports.Game = class Game{
 
 	static Singleton;
@@ -14,7 +14,10 @@ exports.Game = class Game{
 		this.objs = [];//store Network Objects
 
 		this.check = false;
-		
+		this.spawnTimer = 20;
+		this.defaultSpawnTimer = 90;
+		this.boardLimitX = 20;
+		this.boardLimitZ = 25;
 		this.server = server;
 		this.SetUpGameBoard();
 		this.update();
@@ -34,28 +37,15 @@ exports.Game = class Game{
 		const player = this.server.getPlayer(0);//return nth client
 
 		for(var i in this.objs){
-			if(this.objs[i] == null) {
-				this.objs.splice(i, 1);
-				//break;
-			}
-			if(this.objs[i] != null) this.objs[i].update(this);//this is a reference to our game\
-			//console.log(this.objs[i]);
-			//HERE IS WHERE WE WOULD DO COLLISION DETECTION
-			if(this.objs[i] == null){ 
-				this.removeObject(this.objs[i]);
-				this.objs.splice(i, 1);
-			}
-		    if(this.objs[i] != null &&  this.objs[i].classID == "BLLT" ){
-		    	//console.log(this.objs[i].classID);
+
+			this.objs[i].update(this);//this is a reference to our game\
+									
+		    if(this.objs[i].classID == "BLLT" || this.objs[i].classID == "ENMY"){
+		    	
 		    	for(var j in this.objs){
 		    		if(this.objs[i] != this.objs[j] && this.objs[i] != null){
 		    			
-		    			if(this.objs[i].checkCollision(this.objs[j])){
-		    				this.objs[j].shouldDelete = true;
-		    				//console.log("We have a collision");
-		    				//this.removeObject(this.objs[j]);
-		    				//this.objs.splice(j, 1);
-		    			}
+		    			this.objs[i].checkCollision(this.objs[j])
 		    		}
 		    	}
 		    	
@@ -70,7 +60,7 @@ exports.Game = class Game{
 			}
 		}
 
-
+		this.waveSpawner();
 
 		
 
@@ -161,5 +151,17 @@ exports.Game = class Game{
 		}//End of nested forloop
 	}
 	
+	waveSpawner(){
+		this.spawnTimer -= 1;
+		if(this.spawnTimer <= 0)
+		{
+			this.enemy = new Enemy();
+			this.enemy.position.x = Math.random() * this.boardLimitX;
+			this.enemy.position.z = this.boardLimitZ;
+			this.spawnObject(this.enemy);
+			this.spawnTimer += (Math.random() * this.defaultSpawnTimer);
+
+		}
+	}
 
 }//End of game class
