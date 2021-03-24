@@ -36,27 +36,41 @@ exports.Game = class Game{
 		for(var i in this.objs){
 			if(this.objs[i] == null) {
 				this.objs.splice(i, 1);
-				break;
+				//break;
 			}
-			this.objs[i].update(this);//this is a reference to our game\
-			if(this.objs[i] == null) break;
+			if(this.objs[i] != null) this.objs[i].update(this);//this is a reference to our game\
+			//console.log(this.objs[i]);
 			//HERE IS WHERE WE WOULD DO COLLISION DETECTION
-			if(this.objs[i].moving == true){
-				for(var j in this.objs){
-					if(this.objs[i] != this.objs[j]){
-						if(this.objs[i] != null && this.objs[i].checkCollision(this.objs[j])){
-							console.log("HERE");
-							if(this.objs[i].classID == "BLLT"){
-								console.log("AND NOW HERE");
-								this.removeObject(this.objs[j]);
-								break;
-							}
-						}
-					}
-				}
+			if(this.objs[i] == null){ 
+				this.removeObject(this.objs[i]);
+				this.objs.splice(i, 1);
 			}
+		    if(this.objs[i] != null &&  this.objs[i].classID == "BLLT" ){
+		    	//console.log(this.objs[i].classID);
+		    	for(var j in this.objs){
+		    		if(this.objs[i] != this.objs[j] && this.objs[i] != null){
+		    			
+		    			if(this.objs[i].checkCollision(this.objs[j])){
+		    				this.objs[j].shouldDelete = true;
+		    				//console.log("We have a collision");
+		    				//this.removeObject(this.objs[j]);
+		    				//this.objs.splice(j, 1);
+		    			}
+		    		}
+		    	}
+		    	
+		    }
 			
 		}//End of for loop
+
+
+		for(var j in this.objs){
+			if(this.objs[j].shouldDelete == true){
+				this.removeObject(this.objs[j]);
+			}
+		}
+
+
 
 		
 

@@ -51,7 +51,7 @@ exports.Client = class Client{
 				if(packet.length < 6) return;
 				this.input.axisH = packet.readInt8(4);
 				this.input.firing = packet.readInt8(5);
-				console.log(this.input.firing);
+				//console.log(this.input.firing); This is why there were all those zeros
 				//if client exists send input to pawn
 				if(this.pawn) this.pawn.input = this.input;
 			break;

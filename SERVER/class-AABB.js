@@ -14,9 +14,9 @@ exports.AABB = class AABB{
 	}
 	compareBounds(a, b ){
 
-		if( (a.xMin <= b.xMax && a.xMax >= b.xMin) &&
-		 	(a.zMin <= b.zMax && a.zMax >= b.zMin)){
-
+		if( (a.xMax <= b.xMin || a.xMin >= b.xMax) &&
+		 	(a.zMax <= b.zMin || a.zMin >= b.zMax)){
+			console.log("We've got a hit");
 			return true;
 		}//End of massive if
 

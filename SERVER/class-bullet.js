@@ -9,8 +9,8 @@ exports.Bullet = class Bullet extends NetworkObject{
 		this.speed = 20;
 
 		//properties for aabb
-		this.width  =1;
-		this.height =1;
+		this.width  =1.5;
+		this.height =1.5;
 		//setting up aabb
 		this.aabb.x = this.position.x;
 		this.aabb.z = this.position.z;
@@ -21,15 +21,24 @@ exports.Bullet = class Bullet extends NetworkObject{
 	update(game){
 		//bullet logic here
 		this.position.z += this.speed * game.dt;
-		if(this.position.z > 50) game.removeObject(this);
-		this.aabb.updateBounds(this.position.x, this.position.z);
+		if(this.position.z > 50) this.shouldDelete = true;
+		//this.aabb.updateBounds(this.position.x, this.position.z);
 		//console.log(this + "THIS BULLET IS AT POSITION " + this.position.z);
 	}
 
 	checkCollision(otherGameObject){
-		if(this.aabb.compareBounds(this.aabb.bounds, otherGameObject.aabb.bounds)){
+		//if(this.aabb.compareBounds(this.aabb, otherGameObject.aabb)){
+		//	return true;
+		//}
+		//return false;
+
+		if(this.position.x < otherGameObject.position.x + otherGameObject.width &&
+		   this.position.x + this.width > otherGameObject.position.x &&
+		   this.position.z < otherGameObject.position.z + otherGameObject.height &&
+		   this.position.z +this.height > otherGameObject.position.z  ){
 			return true;
 		}
+
 		return false;
 	}
 
