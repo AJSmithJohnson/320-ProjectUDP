@@ -255,6 +255,8 @@ MonoBehaviour:
     prefab: {fileID: 1483914949432932704, guid: 6904b803836ec6444af6a416cd642839, type: 3}
   - classID: BLLT
     prefab: {fileID: 8453399569659766727, guid: 63cec664a827454449fea2cd87aafe64, type: 3}
+  - classID: ENMY
+    prefab: {fileID: 45257410839166226, guid: 2807a8a907c28c448821f6db53911873, type: 3}
 --- !u!114 &1286434645
 MonoBehaviour:
   m_ObjectHideFlags: 0
