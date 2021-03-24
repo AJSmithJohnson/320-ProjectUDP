@@ -4,10 +4,12 @@ exports.Bullet = class Bullet extends NetworkObject{
 	constructor(){
 		super();
 		this.classID = "BLLT";
+
+
 		//this.position.x = spawnX;
 		//this.position.y = spawnY;
 		this.speed = 20;
-
+		this.pawnReference = "";
 		//properties for aabb
 		this.width  =1.5;
 		this.height =1.5;
@@ -36,7 +38,10 @@ exports.Bullet = class Bullet extends NetworkObject{
 		   this.position.x + this.width > otherGameObject.position.x &&
 		   this.position.z < otherGameObject.position.z + otherGameObject.height &&
 		   this.position.z +this.height > otherGameObject.position.z  ){
-		   	if(otherGameObject.classID == "OBCL" || otherGameObject.classID == "ENMY"){otherGameObject.shouldDelete = true;}
+		   	if(otherGameObject.classID == "OBCL" || otherGameObject.classID == "ENMY"){
+		   		this.pawnReference.updateScore(otherGameObject.scoreValue);
+		   		otherGameObject.shouldDelete = true;
+		   	}
 			
 		}
 

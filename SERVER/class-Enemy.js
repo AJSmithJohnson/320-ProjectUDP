@@ -11,6 +11,7 @@ exports.Enemy = class Enemy extends NetworkObject{
 		this.scale.x = 1;
 		this.scale.y = 1;
 		this.scale.z = 1;
+		this.scoreValue = 100;
 	}
 
 	update(game){

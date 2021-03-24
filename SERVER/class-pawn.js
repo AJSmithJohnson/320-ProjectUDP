@@ -5,7 +5,11 @@ const Bullet = require("./class-bullet.js").Bullet;
 exports.Pawn = class Pawn extends NetworkObject{
 	constructor(){
 		super();//calls the superclasses constructor//which in this case is the one on the class-networkObject
+		
 		this.classID = "PAWN";
+
+
+		this.score = 0;
 
 		this.timer = 2;
 		//properties for aabb
@@ -59,6 +63,7 @@ exports.Pawn = class Pawn extends NetworkObject{
 			
 			if(this.timer <= 0){
 				this.bullet = new Bullet();
+				this.bullet.pawnReference = this;
 				this.bullet.position.x = this.position.x;
 				this.bullet.position.z = this.position.z + 1;
 				game.spawnObject(this.bullet);//spawn a new bullet if we are firing	
@@ -79,7 +84,10 @@ exports.Pawn = class Pawn extends NetworkObject{
 		//Nothing to put here yet
 		return false;
 	}
-
+	updateScore(scoreValue){
+		this.score += scoreValue;
+		console.log(this.score);
+	}
 	damage(damage){
 		this.health -= damage;
 

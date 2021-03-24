@@ -15,7 +15,8 @@ exports.Game = class Game{
 
 		this.check = false;
 		this.spawnTimer = 20;
-		this.defaultSpawnTimer = 90;
+		this.defaultSpawnTimer = 200;
+		this.enemyWavelimit = 10;
 		this.boardLimitX = 20;
 		this.boardLimitZ = 25;
 		this.server = server;
@@ -153,14 +154,21 @@ exports.Game = class Game{
 	
 	waveSpawner(){
 		this.spawnTimer -= 1;
+		
+		
 		if(this.spawnTimer <= 0)
 		{
-			this.enemy = new Enemy();
-			this.enemy.position.x = Math.random() * this.boardLimitX;
-			this.enemy.position.z = this.boardLimitZ;
-			this.spawnObject(this.enemy);
-			this.spawnTimer += (Math.random() * this.defaultSpawnTimer);
+			var waveAmount = Math.round(this.enemyWavelimit * Math.random());
+			console.log(waveAmount);
+			for(var i = waveAmount; i > 0; i--){
+				this.enemy = new Enemy();
+				this.enemy.position.x = Math.random() * this.boardLimitX;
+				this.enemy.position.z = this.boardLimitZ;
+				this.spawnObject(this.enemy);
+				
+			}
 
+			this.spawnTimer += (Math.random() * this.defaultSpawnTimer);
 		}
 	}
 

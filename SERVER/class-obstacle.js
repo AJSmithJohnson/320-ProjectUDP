@@ -8,6 +8,7 @@ exports.Obstacle = class Obstacle extends NetworkObject{
 		this.width = 1.75;
 		this.height = 1.75;
 
+		this.scoreValue = 20;
 		/*this.aabb.x = this.position.x;
 		this.aabb.z = this.position.z;
 		this.aabb.width = this.width;
