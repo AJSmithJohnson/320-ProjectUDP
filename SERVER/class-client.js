@@ -55,6 +55,14 @@ exports.Client = class Client{
 				//if client exists send input to pawn
 				if(this.pawn) this.pawn.input = this.input;
 			break;
+			case "REDY":
+				if(packet.length < 4) return;
+				//we don't need to do anything here
+
+			break;
+			case "NRDY":
+				if(packet.length < 4) return;
+				//we shouldn't need to do anything here
 			/*case "SHOT":
 				if(packet.length < 5) return;
 				this.input.firing = packet.readInt8(4);

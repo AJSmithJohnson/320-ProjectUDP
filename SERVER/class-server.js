@@ -7,7 +7,8 @@ exports.Server = class Server {
 	constructor(){
 
 		this.clients = [];
-
+		this.numberOfClients = 0;
+		this.ready = 0;
 		//create socket:
 		this.sock = require("dgram").createSocket("udp4");
 
@@ -33,7 +34,14 @@ exports.Server = class Server {
 	onPacket(msg, rinfo){
 		if(msg.length < 4) return;
 		const packetID = msg.slice(0,4).toString();
-		
+		if(packetID == "REDY"){
+				console.log("WE ARE READY");
+				this.ready += 1;
+				this.startGame();
+			}
+			if(packetID == "NRDY"){
+				this.ready -= 1;
+			}
         const c = this.lookupClient(rinfo);
         if(c){//If client exists then handle packet
         	c.onPacket(msg, this.game);
@@ -41,6 +49,7 @@ exports.Server = class Server {
 			if(packetID == "JOIN"){
 				this.makeClient(rinfo);
 			}//end of if(packetID)
+
         }//end of else{}
 
 		
@@ -49,6 +58,14 @@ exports.Server = class Server {
 
 		//console.log("MESSAGE received from " + rinfo.address+ " : " + rinfo.port);
 	}//End of onPacket
+
+	startGame(){
+		console.log(this.clients.length);
+		console.log(this.ready);
+		if(this.numberOfClients == this.ready){
+			this.game.start = true;
+		}
+	}
 
 	getKeyFromRinfo(rinfo){
 		return rinfo.address+":"+rinfo.port;
@@ -63,7 +80,7 @@ exports.Server = class Server {
 		this.clients[key] = client;
 		//depending on scene (and other conditions) spawn Pawn:
 		client.spawnPawn(this.game);
-
+		this.numberOfClients += 1;
 		//this.clients[key] = client;//I commented this out because the above thing is the same thing I think
 
 		this.showClientList();

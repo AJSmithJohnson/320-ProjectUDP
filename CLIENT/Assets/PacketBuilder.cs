@@ -37,7 +37,18 @@ public static class PacketBuilder
         return b;
     }
 
-
+    public static Buffer ReadyUpButton()
+    {
+        Buffer b = Buffer.Alloc(4);
+        b.WriteString("REDY");
+        return b;
+    }
+    public static Buffer ReadyNotButton()
+    {
+        Buffer b = Buffer.Alloc(4);
+        b.WriteString("NRDY");
+        return b;
+    }
    /* //TODO: Refactor we are checking for mousebutton down in GetClientInput
     //so just send 1
     public static Buffer ShootProjectile()

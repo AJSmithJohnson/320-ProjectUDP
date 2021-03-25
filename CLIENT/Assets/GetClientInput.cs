@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GetClientInput : MonoBehaviour
 {
-
+    public Button readyUpButton;
+    public bool readied = false;
     //SHOULD FACTOR IN INPUT HERE SO THAT IF THE PLAYER IS PRESSING SOMETHING THEN WE SEND THE PACKET
     // Start is called before the first frame update
     void Start()
     {
-        
+        readied = false;
+       
     }
 
     // Update is called once per frame
@@ -32,5 +35,33 @@ public class GetClientInput : MonoBehaviour
         
 
         
+    }
+    //After game starts then we need to set the buttons.interactable to false
+    //readyUpButton.interactable = false;
+    public void ReadyUpClick()
+    {
+        if(readied == false)
+        {
+
+            print("Sending readied up button");
+            Buffer b = PacketBuilder.ReadyUpButton();
+            if(b != null)
+            {
+                ClientUDP.singleton.SendPacket(b);
+                readyUpButton.GetComponentInChildren<Text>().text = "UnReady";
+                readied = true;
+            }
+        }
+        else
+        {
+            Buffer b = PacketBuilder.ReadyNotButton();
+            if (b != null)
+            {
+                ClientUDP.singleton.SendPacket(b);
+                readyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
+                readied = false;
+                
+            }
+        }
     }
 }

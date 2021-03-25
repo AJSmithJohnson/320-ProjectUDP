@@ -12,7 +12,7 @@ exports.Game = class Game{
 		this.dt = .016; //this is deltaTime in seconds
 		this.timeUntilNextStatePacket = 0;
 		this.objs = [];//store Network Objects
-
+		this.start = false;
 		this.check = false;
 		this.spawnTimer = 20;
 		this.defaultSpawnTimer = 200;
@@ -26,6 +26,11 @@ exports.Game = class Game{
 		//this.spawnObject(new Pawn() );//should be in server when player joins
 	}//end of constructor
 	update(){
+		
+
+		if(this.start == true){
+
+
 		//Server needs to be authoritative
 		//The server is the only place where we should save the balls state
 		//in unity we are going to have a ball and the server is going to move the ball back and forth
@@ -78,9 +83,10 @@ exports.Game = class Game{
 		}
 
 		
-
+		}
 		setTimeout(()=>this.update(),16); // setTimeout allows us to call a function after a certain amount of time 
 		//^so after 16 milliseconds we call this.update() this is at the end so we kind of recourse into this
+		
 	}//end of update
 	sendWorldState(){//A function to send the balls position to all clients
 		const packet = this.makeREPL(true);
