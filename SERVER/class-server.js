@@ -34,14 +34,7 @@ exports.Server = class Server {
 	onPacket(msg, rinfo){
 		if(msg.length < 4) return;
 		const packetID = msg.slice(0,4).toString();
-		if(packetID == "REDY"){
-				console.log("WE ARE READY");
-				this.ready += 1;
-				this.startGame();
-			}
-			if(packetID == "NRDY"){
-				this.ready -= 1;
-			}
+		
         const c = this.lookupClient(rinfo);
         if(c){//If client exists then handle packet
         	c.onPacket(msg, this.game);
@@ -49,9 +42,17 @@ exports.Server = class Server {
 			if(packetID == "JOIN"){
 				this.makeClient(rinfo);
 			}//end of if(packetID)
-
+			
         }//end of else{}
 
+    	if(packetID == "REDY"){
+				console.log("WE ARE READY");
+				this.ready += 1;
+				this.startGame();
+			}
+			else if(packetID == "NRDY"){
+				this.ready -= 1;
+			}
 		
 		
 
@@ -60,9 +61,14 @@ exports.Server = class Server {
 	}//End of onPacket
 
 	startGame(){
-		console.log(this.clients.length);
+		console.log(this.numberOfClients);
 		console.log(this.ready);
-		if(this.numberOfClients == this.ready){
+		const packet = Buffer.alloc(5)
+		packet.write("STRT", 0);
+		packet.writeUInt8(this.numberOfClients, 4);
+		this.sendPacketToAll(packet);
+
+		if((this.numberOfClients) == this.ready){
 			this.game.start = true;
 		}
 	}
@@ -135,6 +141,17 @@ exports.Server = class Server {
 		}
 
 	}//End of broadcast
+
+
+	updateClientScores(client){
+		console.log(client);
+		const scorePacket = Buffer.alloc(6);
+		scorePacket.write("SCRE", 0);
+		scorePacket.writeUInt8(client.clientNum, 4);
+		scorePacket.writeUInt8(client.pawn.score, 5);
+		this.sendPacketToClient(scorePacket, client);
+	}
+
 	sendPacketToClient(packet, client){
 		this.sock.send(packet, 0, packet.length, client.rinfo.port, client.rinfo.address, ()=>{} );
 	} 

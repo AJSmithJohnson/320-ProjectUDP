@@ -34,11 +34,13 @@ exports.Enemy = class Enemy extends NetworkObject{
 		   		return true;
 		   		
 		   	}else if(otherGameObject.classID == "OBCL"){
-		   		this.scale.x += 1;
-		   		this.scale.y += 1;
-		   		this.scale.z += 1;
-		   		this.width += 1;
-		   		this.height += 1;
+
+		   		//NOTE CHANGED THESE FROM 1 to .2
+		   		this.scale.x += .2;
+		   		this.scale.y += .2;
+		   		this.scale.z += .2;
+		   		this.width += .2;
+		   		this.height += .2;
 		   		otherGameObject.shouldDelete = true;
 
 		   		return true;

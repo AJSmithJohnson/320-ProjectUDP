@@ -10,17 +10,18 @@ exports.Client = class Client{
 			axisV:0,//verticalInput
 			firing: 0,//is the player firing a projectile
 		};//end of this.input
-
+		this.game = null;
 		this.pawn = null;//we are storing clients input in client class
 		//every time we get input from client we push this input into the pawn object
-
+		this.clientNum = 0;
 		this.timeOfLastPacket = Game.Singleton.time;
 	}//End of constructor
 
 	spawnPawn(game){
 		if(this.pawn) return; //if there is a pawn already spawned return out of function
 		this.pawn = new Pawn(); //set up pawn variable and reference
-		game.spawnObject( this.pawn );//Add pawn to game world
+		//really gross and absolute spagetti here 
+		this.game =game.spawnObject( this.pawn );//Add pawn to game world
 
 		
 	}
@@ -55,26 +56,23 @@ exports.Client = class Client{
 				//if client exists send input to pawn
 				if(this.pawn) this.pawn.input = this.input;
 			break;
-			case "REDY":
+			/*case "REDY":
 				if(packet.length < 4) return;
 				//we don't need to do anything here
+				this.game.server.ready += 1;
+				this.clientNum = this.game.server.ready;
+				this.startGame();
 
 			break;
 			case "NRDY":
 				if(packet.length < 4) return;
-				//we shouldn't need to do anything here
-			/*case "SHOT":
-				if(packet.length < 5) return;
-				this.input.firing = packet.readInt8(4);
-				console.log(this.input.firing);
-				if(this.pawn) this.pawn.input.firing = this.input.firing;*/
-
-			//TODO: Handle all the many wonderful packets
-			break;
+				 this.game.server.ready -= 1;
+			break;*/
 			default:
 				console.log("OH NO, packet type not recognized");
 			break;
 		}//End of switch
+
 
 	}//end of onPacket
 }

@@ -1,13 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Net;
 using System.Net.Sockets;
-using System;
+using UnityEngine.UI;
 
 public class ClientUDP : MonoBehaviour
 {
-
+    public Canvas uiCanvas;
+    public bool readied;
+    public Button readyUpButton;
+    public Text playerNamePrefab;
+    public Text scorePrefab;
+    public Vector3 uiTransform;
+    private List<Text> scores = new List<Text>();
+    
+    //Id on't think we need to use actions
+    //public event Action moveUI;
     private static ClientUDP _singleton;
     public static ClientUDP singleton
     {
@@ -113,6 +123,23 @@ public class ClientUDP : MonoBehaviour
                     if (p != null) p.canPlayerControl = true;
                 }
                 break;
+            case "STRT":
+
+
+                print("RECIEVED A START PACKET");
+                RecievedStartPacket(packet.ReadUInt8(4));
+                break;
+            case "SCRE":
+                scorePrefab.text = packet.ReadUInt8(5).ToString();
+               /* //We want to 
+                int loopSize = packet.ReadUInt8(5); // we get the size of the for loop from the fifth byte
+                for(int i = 0; i < loopSize; i++)// We loop through the total number of scores
+                {
+                    if(scores[i] != null)//WE check to make sure we don't have a null reference here
+                    scores[i].text = "Score: " + packet.ReadUInt8(5 + (loopSize + 1)).ToString();//WE read from the appropriate spot in the packet and change the type to a string
+                }*/
+
+                break;
         }//end of switch(id)
 
     }//end of void ProcessPacket
@@ -192,6 +219,7 @@ public class ClientUDP : MonoBehaviour
 
     async public void SendPacket(Buffer packet)//takes a packet and sends it //made public so we can access it from packetBuilder
     {
+        print("We have sent a packet");
         if (sock == null) return;
         if (!sock.Client.Connected) return;
         
@@ -200,11 +228,7 @@ public class ClientUDP : MonoBehaviour
         await sock.SendAsync(packet.bytes, packet.bytes.Length);
     }
     
-    void Update()
-    {
-        
-    }
-
+    
     /// <summary>
     /// when destroying clean up objects\\
     /// </summary>
@@ -212,4 +236,53 @@ public class ClientUDP : MonoBehaviour
     {
         sock.Close();//after we call on destory our loop is still running
     }
+
+   
+
+
+
+    public void ReadyUpClick()
+    {
+        if (readied == false)
+        {
+
+            print("Sending readied up button");
+            Buffer b = PacketBuilder.ReadyUpButton();
+            if (b != null)
+            {
+                print("WE are recieving the ready up click");
+                SendPacket(b);
+                readyUpButton.GetComponentInChildren<Text>().text = "UnReady";
+                readied = true;
+            }
+        }
+        else
+        {
+            Buffer b = PacketBuilder.ReadyNotButton();
+            if (b != null)
+            {
+               SendPacket(b);
+                readyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
+                readied = false;
+
+            }
+        }
+    }
+
+    public void RecievedStartPacket(int playerNumber)
+    {
+        
+        readyUpButton.transform.position = new Vector3(-300, 0, 0);
+        playerNamePrefab = Instantiate(playerNamePrefab, new Vector3(124, 100, 0), Quaternion.identity);
+        playerNamePrefab.text ="Player" + playerNumber.ToString();
+        playerNamePrefab.transform.SetParent(uiCanvas.transform);
+        playerNamePrefab.transform.position = new Vector3(124, 100, 0);
+        
+        
+        scorePrefab = Instantiate(scorePrefab, new Vector3(124 * scores.Count + 1, 124, 0), Quaternion.identity);
+        scorePrefab.transform.SetParent(uiCanvas.transform);
+        scores.Add(scorePrefab);
+        scorePrefab.transform.position = new Vector3(124 * scores.Count + 1, 160, 0);
+    }
+
 }

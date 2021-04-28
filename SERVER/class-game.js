@@ -9,6 +9,10 @@ exports.Game = class Game{
 		Game.Singleton = this;
 		this.frame = 0;
 		this.time = 0;
+
+		this.counter = 0;
+		this.defaultCounter = 2;
+
 		this.dt = .016; //this is deltaTime in seconds
 		this.timeUntilNextStatePacket = 0;
 		this.objs = [];//store Network Objects
@@ -19,6 +23,7 @@ exports.Game = class Game{
 		this.enemyWavelimit = 10;
 		this.boardLimitX = 20;
 		this.boardLimitZ = 25;
+		this.terrainTotal = 0; 
 		this.server = server;
 		this.SetUpGameBoard();
 		this.update();
@@ -62,16 +67,30 @@ exports.Game = class Game{
 
 		for(var j in this.objs){
 			if(this.objs[j].shouldDelete == true){
+				if(this.objs[j].classID == "OBCL"){
+					this.terrainTotal -= 1;
+				}
 				this.removeObject(this.objs[j]);
 			}
+		}
+
+		if(this.terrainTotal <= 0){
+
 		}
 
 		this.waveSpawner();
 
 		
 
+		if(this.counter <= 0){
+			for(var i = 0; i <= this.server.clients.length; i++){
+				console.log(this.server.clients[i]);
+				//this.server.updateClientScores(this.server.clients[i]);
+			}
+			this.counter = this.defaultCounter;
+		}
 
-
+		this.counter -= 1 * this.dt;
 		// update all the objects in the game and then
 
 		if(this.timeUntilNextStatePacket > 0){//this is used to throttle packets sent so we don't overload the client
@@ -153,6 +172,7 @@ exports.Game = class Game{
 					this.obstacle.position.x = i;
 					this.obstacle.position.z = u;
 					this.spawnObject(this.obstacle);
+					this.terrainTotal += 1;
 				}//End of Math.random
 			}
 		}//End of nested forloop

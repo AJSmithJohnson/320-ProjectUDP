@@ -12,6 +12,7 @@ exports.Pawn = class Pawn extends NetworkObject{
 		this.score = 0;
 
 		this.timer = 2;
+		this.timerDefault = 5;
 		//properties for aabb
 		this.width = 1;
 		this.height = 1;
@@ -67,13 +68,13 @@ exports.Pawn = class Pawn extends NetworkObject{
 				this.bullet.position.x = this.position.x;
 				this.bullet.position.z = this.position.z + 1;
 				game.spawnObject(this.bullet);//spawn a new bullet if we are firing	
-				this.timer = 5;
+				this.timer = this.timerDefault;
 			}else{
-				this.timer -=1;
+				
 			}
 			
 		}
-		
+		this.timer -=1 * game.dt;
 		this.position.x += this.velocity.x * game.dt;
 		//this.aabb.x = this.position.x;
 		//this.aabb.z = this.position.z;
