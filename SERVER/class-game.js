@@ -27,7 +27,7 @@ exports.Game = class Game{
 		this.server = server;
 		this.SetUpGameBoard();
 		this.update();
-
+		this.score = 0;
 		//this.spawnObject(new Pawn() );//should be in server when player joins
 	}//end of constructor
 	update(){
@@ -84,11 +84,9 @@ exports.Game = class Game{
 
 		if(this.counter <= 0){
 
-			for(var i = 0; i <= this.server.clients.length; i++){
-				//console.log(this.server.clients.length);
-				//console.log(this.server.clients[i]);
-				this.server.updateClientScores(i);
-			}
+			
+			this.server.updateClientScores(i);
+			
 			this.counter = this.defaultCounter;
 		}
 

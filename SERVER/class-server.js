@@ -148,12 +148,13 @@ exports.Server = class Server {
 
 
 	updateClientScores(clientNum){
-		console.log(this.clients[clientNum]);
-		//const scorePacket = Buffer.alloc(6);
-		//scorePacket.write("SCRE", 0);
-		//scorePacket.writeUInt8(client.clientNum, 4);
-		//scorePacket.writeUInt8(client.pawn.score, 5);
-		//this.sendPacketToClient(scorePacket, this.clients[clientNum]);
+		
+		const scorePacket = Buffer.alloc(6);
+		scorePacket.write("SCRE", 0);
+		scorePacket.writeUInt8(this.clients[clientNum], 4);
+		
+		scorePacket.writeUInt8(this.clients[clientNum].pawn.score, 5);
+		this.sendPacketToAll(packet);
 	}
 
 	sendPacketToClient(packet, client){
