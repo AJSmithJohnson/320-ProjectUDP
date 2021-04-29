@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 
-//\public delegate NetworkObject SpawnDelegate();//completely forget what this was used for
+
 
 //Changed from static to public put in monobehavior
  public class ObjectRegistry : MonoBehaviour
@@ -19,7 +19,7 @@ using System.Reflection;
 
     //Reflection is code that lets you pull apart the code base itself
     //reflection classes are all about letting you pull apart all the functions and classes and stuff inside of it
-    //static private Dictionary<string, Type> registeredTypes = new Dictionary<string, Type>();//not using this anymore
+   
 
     static private ObjectRegistry _singleton;
 

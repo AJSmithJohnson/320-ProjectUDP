@@ -45,7 +45,7 @@ exports.Enemy = class Enemy extends NetworkObject{
 
 		   		return true;
 		   	}
-		//IF other game object is PLYR we flag for deletion and then \
+		
 			
 		}
 

@@ -28,13 +28,13 @@ exports.Server = class Server {
 		console.log("ERROR: "+ e);
 	}//End of onError
 	onStartListen(){
-		console.log("IM LISTENING TO YOU SEND ME YOUR INFO FOOLS");
+		console.log("Server Started");
 	}//End of onStartListen
 	
 	onPacket(msg, rinfo){
 		if(msg.length < 4) return;
 		const packetID = msg.slice(0,4).toString();
-		
+		console.log(packetID);
         const c = this.lookupClient(rinfo);
         if(c){//If client exists then handle packet
         	c.onPacket(msg, this.game);
@@ -61,8 +61,8 @@ exports.Server = class Server {
 	}//End of onPacket
 
 	startGame(){
-		console.log(this.numberOfClients);
-		console.log(this.ready);
+		//console.log(this.numberOfClients);
+		//console.log(this.ready);
 		const packet = Buffer.alloc(5)
 		packet.write("STRT", 0);
 		packet.writeUInt8(this.numberOfClients, 4);
@@ -143,13 +143,13 @@ exports.Server = class Server {
 	}//End of broadcast
 
 
-	updateClientScores(client){
+	updateClientScores(clientNum){
 		console.log(client);
 		const scorePacket = Buffer.alloc(6);
 		scorePacket.write("SCRE", 0);
 		scorePacket.writeUInt8(client.clientNum, 4);
 		scorePacket.writeUInt8(client.pawn.score, 5);
-		this.sendPacketToClient(scorePacket, client);
+		this.sendPacketToClient(scorePacket, this.clients[clientNum]);
 	}
 
 	sendPacketToClient(packet, client){

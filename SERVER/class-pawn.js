@@ -94,7 +94,7 @@ exports.Pawn = class Pawn extends NetworkObject{
 
 		if(this.health <= 0){
 			console.log("Game over");
-			//TODO: Bring up scoreboard and shit
+			
 		}
 	}
 	serialize(){

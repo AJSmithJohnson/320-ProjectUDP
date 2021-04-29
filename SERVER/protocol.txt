@@ -8,6 +8,7 @@ Packets from Client
 =====================
 
 JOIN - sent when joining the game, this packet should "register the player" (request) we won't cover the response for this demo
+	
 	O 	L	Datatype	DESC
 	========================
 	0	4	ascii		"JOIN"
@@ -18,7 +19,20 @@ INPT - Current State of the client's input from the player.
 	=========================
 	0  4    ascii 		"INPT"
 	4  1    int8 		direction of horizontal input (is -1, 0, 1)
+	5  1    int8 		if the player has the mouse button down (is 0, 1)
+
+REDY - Sent when the player presses the ready up button
 	
+	O 	L	Datatype	DESC
+	========================
+	0	4	ascii		"REDY"
+
+NRDY - Sent when the player presses the ready up button after having previously readied up
+
+	O 	L	Datatype	DESC
+	========================
+	0	4	ascii		"NRDY"
+
 
 
 Packets From Server
@@ -40,4 +54,10 @@ PAWN - Sent to client to indicate which pawn they control
 	===========================================
 	0	4	ascii		PAWN
 	4 	1	uint8		NetworkID
+
+STRT - Sent when we are starting the game
 	
+	O 	L	Datatype	DESC
+	========================
+	0	4	ascii		"STRT"
+	4   1   uint8 		the number of clients in the game
