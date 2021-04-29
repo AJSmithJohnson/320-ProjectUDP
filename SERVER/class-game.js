@@ -20,7 +20,7 @@ exports.Game = class Game{
 		this.check = false;
 		this.spawnTimer = 20;
 		this.defaultSpawnTimer = 200;
-		this.enemyWavelimit = 10;
+		this.enemyWavelimit = 8;
 		this.boardLimitX = 20;
 		this.boardLimitZ = 25;
 		this.terrainTotal = 0; 
@@ -56,7 +56,7 @@ exports.Game = class Game{
 		    	for(var j in this.objs){
 		    		if(this.objs[i] != this.objs[j] && this.objs[i] != null){
 		    			
-		    			this.objs[i].checkCollision(this.objs[j])
+		    			this.objs[i].checkCollision(this.objs[j]);
 		    		}
 		    	}
 		    	
@@ -85,7 +85,7 @@ exports.Game = class Game{
 		if(this.counter <= 0){
 
 			for(var i = 0; i <= this.server.clients.length; i++){
-				console.log(this.server.clients.length);
+				//console.log(this.server.clients.length);
 				//console.log(this.server.clients[i]);
 				this.server.updateClientScores(i);
 			}
@@ -125,6 +125,7 @@ exports.Game = class Game{
 
 		this.objs.forEach(o=>{
 			//cuffer from the objects class ID and buffer returned from serialize
+
 			const classID = Buffer.from(o.classID);
 			const data = o.serialize();
 

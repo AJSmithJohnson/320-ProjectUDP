@@ -7,7 +7,7 @@ exports.Enemy = class Enemy extends NetworkObject{
 		this.health = 1;
 		this.width = 1.75;
 		this.height = 1.75;
-		this.speed = 8;
+		this.speed = 5;
 		this.scale.x = 1;
 		this.scale.y = 1;
 		this.scale.z = 1;
@@ -52,4 +52,17 @@ exports.Enemy = class Enemy extends NetworkObject{
 		return false;
 		
 	}//End Of Check Collision method
+	serialize(){
+		let b = super.serialize();
+
+		if(b == null){
+			this.shouldDelete = true;
+		}else{
+			return b;	
+		}
+		//Here we would add additional bytes that are needed for our pawn
+		
+
+		//\super.serialize();
+	}
 }

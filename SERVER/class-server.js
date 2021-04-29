@@ -14,7 +14,7 @@ exports.Server = class Server {
 
 		//setup event-listeners:\
 		this.sock.on("error", (e)=>this.onError(e));
-
+		this.maxPlayers = 1;
 		this.sock.on("listening", ()=>this.onStartListen());
 		this.game = new Game(this);
 		//this.game.spawnObject( new Pawn());
@@ -48,7 +48,11 @@ exports.Server = class Server {
     	if(packetID == "REDY"){
 				console.log("WE ARE READY");
 				this.ready += 1;
-				this.startGame();
+				//To Control how many players are allowed raise or lower maxPlayers
+				if(this.ready >= this.maxPlayers){
+					this.startGame();	
+				}
+				
 			}
 			else if(packetID == "NRDY"){
 				this.ready -= 1;
@@ -144,12 +148,12 @@ exports.Server = class Server {
 
 
 	updateClientScores(clientNum){
-		console.log(client);
-		const scorePacket = Buffer.alloc(6);
-		scorePacket.write("SCRE", 0);
-		scorePacket.writeUInt8(client.clientNum, 4);
-		scorePacket.writeUInt8(client.pawn.score, 5);
-		this.sendPacketToClient(scorePacket, this.clients[clientNum]);
+		console.log(this.clients[clientNum]);
+		//const scorePacket = Buffer.alloc(6);
+		//scorePacket.write("SCRE", 0);
+		//scorePacket.writeUInt8(client.clientNum, 4);
+		//scorePacket.writeUInt8(client.pawn.score, 5);
+		//this.sendPacketToClient(scorePacket, this.clients[clientNum]);
 	}
 
 	sendPacketToClient(packet, client){

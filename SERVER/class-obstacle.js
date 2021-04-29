@@ -30,4 +30,17 @@ exports.Obstacle = class Obstacle extends NetworkObject{
 		//}
 		return false;
 	}
+	serialize(){
+		let b = super.serialize();
+		if(b == null){
+			this.shouldDelete = true;
+		}else{
+			return b;	
+		}
+
+		//Here we would add additional bytes that are needed for our pawn
+		
+
+		//\super.serialize();
+	}
 }

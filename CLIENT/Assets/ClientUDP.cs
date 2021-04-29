@@ -13,6 +13,7 @@ public class ClientUDP : MonoBehaviour
     public Button readyUpButton;
     public Text playerNamePrefab;
     public Text scorePrefab;
+    public Text instructionText;
     public Vector3 uiTransform;
     private List<Text> scores = new List<Text>();
     
@@ -36,7 +37,7 @@ public class ClientUDP : MonoBehaviour
     /// </summary>
     uint ackBallupdate = 0; //called ack because client server acknowledges the packet
 
-    public Transform ball;
+    
     void Start()
     {
         if(singleton != null)
@@ -277,7 +278,7 @@ public class ClientUDP : MonoBehaviour
         playerNamePrefab.text ="Player" + playerNumber.ToString();
         playerNamePrefab.transform.SetParent(uiCanvas.transform);
         playerNamePrefab.transform.position = new Vector3(124, 100, 0);
-        
+        instructionText.transform.position = new Vector3(-300, 0, 0);
         
         scorePrefab = Instantiate(scorePrefab, new Vector3(124 * scores.Count + 1, 124, 0), Quaternion.identity);
         scorePrefab.transform.SetParent(uiCanvas.transform);

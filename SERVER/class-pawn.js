@@ -12,7 +12,7 @@ exports.Pawn = class Pawn extends NetworkObject{
 		this.score = 0;
 
 		this.timer = 2;
-		this.timerDefault = 5;
+		this.timerDefault = 2;
 		//properties for aabb
 		this.width = 1;
 		this.height = 1;
@@ -75,14 +75,38 @@ exports.Pawn = class Pawn extends NetworkObject{
 			
 		}
 		this.timer -=1 * game.dt;
-		this.position.x += this.velocity.x * game.dt;
+		
+		
+		
+		if(this.position.x > 19){
+			this.position.x = 18;
+		}else if(this.position.x < -19){
+			this.position.x = -18;
+		}
+
+		this.position.x += this.velocity.x * game.dt;	
 		//this.aabb.x = this.position.x;
 		//this.aabb.z = this.position.z;
 		this.aabb.updateBounds(this.position.x, this.position.z);
 		
 	}
 	checkCollision(otherGameObject){
-		//Nothing to put here yet
+		if(this.position.x < otherGameObject.position.x + otherGameObject.width &&
+		   this.position.x + this.width > otherGameObject.position.x &&
+		   this.position.z < otherGameObject.position.z + otherGameObject.height &&
+		   this.position.z +this.height > otherGameObject.position.z  ){
+		   	//If other game object is OBCL we scale this object
+		   	if(otherGameObject.classID == "ENMY"){
+		   		//Call players damage function
+		   		otherGameObject.damage(this.scaleX *2);
+		   		this.shouldDelete = true;
+		   		return true;
+		   		
+		   	}
+		
+			
+		}
+
 		return false;
 	}
 	updateScore(scoreValue){
@@ -107,7 +131,7 @@ exports.Pawn = class Pawn extends NetworkObject{
 		//\super.serialize();
 	}
 	deserialize(){
-		//TODO
+		
 	}
 
 }

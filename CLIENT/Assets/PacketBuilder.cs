@@ -36,15 +36,15 @@ public static class PacketBuilder
 
     public static Buffer ReadyUpButton()
     {
-        Buffer b = Buffer.Alloc(4);
-        b.WriteString("REDY");
-        return b;
+        Buffer c = Buffer.Alloc(4);
+        c.WriteString("REDY");
+        return c;
     }
     public static Buffer ReadyNotButton()
     {
-        Buffer b = Buffer.Alloc(4);
-        b.WriteString("NRDY");
-        return b;
+        Buffer d = Buffer.Alloc(4);
+        d.WriteString("NRDY");
+        return d;
     }
    
 
