@@ -11,8 +11,8 @@ exports.Pawn = class Pawn extends NetworkObject{
 
 		this.score = 0;
 
-		this.timer = 2;
-		this.timerDefault = 2;
+		this.timer = 1;
+		this.timerDefault = 1;
 		//properties for aabb
 		this.width = 1;
 		this.height = 1;

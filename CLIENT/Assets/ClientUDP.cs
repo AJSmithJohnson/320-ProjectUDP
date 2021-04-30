@@ -286,4 +286,9 @@ public class ClientUDP : MonoBehaviour
         scorePrefab.transform.position = new Vector3(124 * scores.Count + 1, 160, 0);
     }
 
+
+    public void EndGame()
+    {
+        Application.Quit();
+    }
 }

@@ -147,15 +147,7 @@ exports.Server = class Server {
 	}//End of broadcast
 
 
-	updateClientScores(clientNum){
-		
-		const scorePacket = Buffer.alloc(6);
-		scorePacket.write("SCRE", 0);
-		scorePacket.writeUInt8(this.clients[clientNum], 4);
-		
-		scorePacket.writeUInt8(this.clients[clientNum].pawn.score, 5);
-		this.sendPacketToAll(packet);
-	}
+	
 
 	sendPacketToClient(packet, client){
 		this.sock.send(packet, 0, packet.length, client.rinfo.port, client.rinfo.address, ()=>{} );

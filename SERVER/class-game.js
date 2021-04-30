@@ -27,7 +27,6 @@ exports.Game = class Game{
 		this.server = server;
 		this.SetUpGameBoard();
 		this.update();
-		this.score = 0;
 		//this.spawnObject(new Pawn() );//should be in server when player joins
 	}//end of constructor
 	update(){
@@ -82,15 +81,9 @@ exports.Game = class Game{
 
 		
 
-		if(this.counter <= 0){
+		
 
-			
-			this.server.updateClientScores(i);
-			
-			this.counter = this.defaultCounter;
-		}
-
-		this.counter -= 1 * this.dt;
+		
 		// update all the objects in the game and then
 
 		if(this.timeUntilNextStatePacket > 0){//this is used to throttle packets sent so we don't overload the client
